@@ -72,15 +72,19 @@
     }
 
     titleList.innerHTML = html;
-  }
+  };
 
   generateTitleLinks();
 
-  const links = document.querySelectorAll('.titles a');
+  const addClickListenersToArticlesList = function() {
+    const links = document.querySelectorAll('.titles a');
 
-  for(let link of links){
-    link.addEventListener('click', titleClickHandler);
-  }
+    for(let link of links){
+      link.addEventListener('click', titleClickHandler);
+    }
+  };
+
+  addClickListenersToArticlesList();
 
   const generateTags = function(){
     /* find all articles */
@@ -144,6 +148,8 @@
     }
     /* execute function "generateTitleLinks" with article selector as argument */
     generateTitleLinks('[data-tags~="' + tag + '"]');
+    /* reapply event listeners on article list */
+    addClickListenersToArticlesList();
   };
 
   const addClickListenersToTags = function(){
