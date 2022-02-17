@@ -118,3 +118,32 @@ body {
     margin: 0 10px 0 0;
   }
 }
+
+/* tag size font sizes */
+
+.tag-size-{
+  &1{
+    font-size:80%;
+    color: #2ecc71;
+  }
+
+  &2{
+    font-size:90%;
+    color: #2980b9;
+  }
+
+  &3{
+    font-size:100%;
+    color: #e74c3c;
+  }
+
+  &4{
+    font-size:110%;
+    color: #bdc3c7;
+  }
+
+  &5{
+    font-size:120%;
+    color: #2c3e50;
+  }
+}
