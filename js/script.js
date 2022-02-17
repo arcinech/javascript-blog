@@ -4,34 +4,27 @@
     event.preventDefault();
     const clickedElement = this;
     /* remove class 'active' from all article links  */
-
     const activeLinks = document.querySelectorAll('.titles a.active');
-
     for(let activeLink of activeLinks){
       activeLink.classList.remove('active');
     }
 
     /* add class 'active' to the clicked link */
-
     clickedElement.classList.add('active');
 
     /* remove class 'active' from all articles */
-
     const activeArticles = document.querySelectorAll('.posts .post.active');
-
     for(let activeArticle of activeArticles){
       activeArticle.classList.remove('active');
     }
 
     /* get 'href' attribute from the clicked link */
-
     const hrefValue = clickedElement.getAttribute('href');
-    /* find the correct article using the selector (value of 'href' attribute) */
 
+    /* find the correct article using the selector (value of 'href' attribute) */
     const targetArticle = document.querySelector(hrefValue);
 
     /* add class 'active' to the correct article */
-
     targetArticle.classList.add('active');
 
   };
@@ -44,7 +37,11 @@
     optAuthorsListSelector= '.list.authors' ,
     optTagsListSelector = '.tags.list',
     optCloudClassCount = 5,
-    optCloudClassPrefix = 'tag-size-';
+    optCloudClassPrefix = 'tag-size-',
+    optActiveTags = 'a.active[href^="#tag-"',
+    optActiveAuthor = 'a.active[href^="#author-"',
+    optSelectAllTags = 'a[href^="#tag-"',
+    optSelectAllAuthors = 'a[href^="#author-"';
 
   const generateTitleLinks= function(customSelector = ''){
     /* find link list and set empty html variable */
@@ -84,7 +81,7 @@
   addClickListenersToArticlesList();
 
   const calculateTagsParams = function(tags){
-    let params = {min:null,max:null};
+    let params = {min:'',max:''};
     for(let tag in tags){
       params.min = Math.min(tags[tag], params.min);
       params.max = Math.max(tags[tag], params.max);
@@ -93,10 +90,10 @@
   };
 
   const  calculateTagClass = function(count, params){
-    const normalizedCount = count - params.min;
-    const normalizedMax = params.max - params.min;
-    const percentage = normalizedCount / normalizedMax;
-    const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+    const normalizedCount = count - params.min,
+      normalizedMax = params.max - params.min,
+      percentage = normalizedCount / normalizedMax,
+      classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
     return optCloudClassPrefix + classNumber;
   };
 
@@ -118,7 +115,7 @@
       /* START LOOP: for each tag */
       for(let tag of articleTagsArray){
         /* generate HTML of the link */
-        const tagLink = '<li><a  href="#tag-' + tag + '">' + tag + '</a> </li>';
+        const tagLink = '<li><a  href="#tag-' + tag + '">' + tag + '</a> </li> ';
         /* add generated code to html variable */
         html = html + tagLink;
         /* [NEW] check if this link is NOT already in allTags */
@@ -134,24 +131,16 @@
       articleTag.innerHTML = html;
       /* END LOOP: for every article: */
       const tagList = document.querySelector(optTagsListSelector);
-
-      /* [NEW] add html from allTags to tagList */
-      //tagList.innerHTML = allTags.join(' ');
-      console.log(allTags);
       /* [NEW] create variable for all links HTML code */
       const tagsParams = calculateTagsParams(allTags);
-      console.log('tagsParams:', tagsParams);
       let allTagsHTML = '';
-
       /* [NEW] START LOOP: for each tag in allTags: */
       for(let tag in allTags){
         /* [NEW] generate code of a link and add it to allTagsHTML */
         const tagLinkHTML = '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a> </li> ';
-        console.log('tagLinkHTML:', tagLinkHTML); 
         allTagsHTML += tagLinkHTML;
         /* [NEW] END LOOP: for each tag in allTags: */
       }
-
       /*[NEW] add HTML from allTagsHTML to tagList */
       tagList.innerHTML = allTagsHTML;
     }
@@ -169,7 +158,7 @@
     /* make a new constant "tag" and extract tag from the "href" constant */
     const tag = href.replace('#tag-', '');
     /* find all tag links with class active */
-    const tagsActive = document.querySelectorAll('a.active[href^="#tag-"');
+    const tagsActive = document.querySelectorAll(optActiveTags);
     /* START LOOP: for each active tag link */
     for(let activeTag of tagsActive){
       /* remove class active */
@@ -192,7 +181,7 @@
 
   const addClickListenersToTags = function(){
     /* find all links to tags */
-    const links = document.querySelectorAll('a[href^="#tag-"');
+    const links = document.querySelectorAll(optSelectAllTags);
     /* START LOOP: for each link */
     for(let link of links){
       /* add tagClickHandler as event listener for that link */
@@ -204,7 +193,7 @@
   addClickListenersToTags();
 
   const generateAuthors = function(){
-    // select
+    /* select all articles */
     let articles = document.querySelectorAll(optArticleSelector);
     /* array for authors count */
     let allAuthor = {};
@@ -227,17 +216,15 @@
       articleAuthor.innerHTML = authorLink;
 
       const authorList = document.querySelector(optAuthorsListSelector);
-
       /* [NEW] create variable for all links HTML code */
       const authorParams = calculateTagsParams(allAuthor);
       console.log('tagsParams:', authorParams);
       let allAuthorsHTML = '';
-
       /* [NEW] START LOOP: for each tag in allTags: */
       for(let author in allAuthor){
         /* [NEW] generate code of a link and add it to allTagsHTML */
         const authorLinkHTML = '<li><a href="#author-' + author + '">' + author + '</a> <span>(' + allAuthor[author] + ')</span></li> ';
-        console.log('tagLinkHTML:', authorLinkHTML); 
+        console.log('tagLinkHTML:', authorLinkHTML);
         allAuthorsHTML += authorLinkHTML;
         /* [NEW] END LOOP: for each tag in allTags: */
       }
@@ -259,7 +246,7 @@
     /* make a new constant "author" and extract author from the "href" constant */
     const author = href.replace('#author-', '');
     /* find all tag links with class active */
-    const authorActive = document.querySelectorAll('a.active[href^="#author-"');
+    const authorActive = document.querySelectorAll(optActiveAuthor);
     /* START LOOP: for each active author link */
     for(let activeAuthor of authorActive){
       /* remove class active */
@@ -282,7 +269,7 @@
 
   const addClickListenersToAuthors = function(){
     /* find all links to authors */
-    const links = document.querySelectorAll('a[href^="#author-"');
+    const links = document.querySelectorAll(optSelectAllAuthors);
     /* START LOOP: for each link */
     for(let link of links){
       /* add authorClickHandler as event listener for that link */
