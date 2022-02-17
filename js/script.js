@@ -154,7 +154,7 @@
 
   const addClickListenersToTags = function(){
     /* find all links to tags */
-    const links = document.querySelectorAll(optArticleTagsSelector + ' a');
+    const links = document.querySelectorAll('a[href^="#tag-"');
     /* START LOOP: for each link */
     for(let link of links){
       /* add tagClickHandler as event listener for that link */
@@ -221,7 +221,7 @@
 
   const addClickListenersToAuthors = function(){
     /* find all links to authors */
-    const links = document.querySelectorAll(optArticleAuthorSelector + ' a');
+    const links = document.querySelectorAll('a[href^="#author-"');
     /* START LOOP: for each link */
     for(let link of links){
       /* add authorClickHandler as event listener for that link */
