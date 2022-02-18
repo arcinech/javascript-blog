@@ -115,7 +115,7 @@
       /* START LOOP: for each tag */
       for(let tag of articleTagsArray){
         /* generate HTML of the link */
-        const tagLink = '<li><a  href="#tag-' + tag + '">' + tag + '</a> </li> ';
+        const tagLink = '<li><a href="#tag-' + tag + '">' + tag + '</a></li> ';
         /* add generated code to html variable */
         html = html + tagLink;
         /* [NEW] check if this link is NOT already in allTags */
