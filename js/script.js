@@ -129,7 +129,7 @@
         /* generate HTML of the link */
         //const tagLink = '<li><a  href="#tag-' + tag + '">' + tag + '</a> </li> ';
         const linkHTMLData = {id: tag , title: tag},
-          linkHTML = templates.articleLink(linkHTMLData);
+          linkHTML = templates.tagLink(linkHTMLData);
         /* add generated code to html variable */
         html = html + linkHTML;
         /* [NEW] check if this link is NOT already in allTags */
