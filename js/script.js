@@ -43,6 +43,15 @@
     optSelectAllTags = 'a[href^="#tag-"',
     optSelectAllAuthors = 'a[href^="#author-"';
 
+
+  const addClickListenersToArticlesList = function() {
+    const links = document.querySelectorAll('.titles a');
+
+    for(let link of links){
+      link.addEventListener('click', titleClickHandler);
+    }
+  };
+
   const generateTitleLinks= function(customSelector = ''){
     /* find link list and set empty html variable */
     let titleList = document.querySelector(optTitleListSelector),
@@ -66,19 +75,13 @@
     }
 
     titleList.innerHTML = html;
+
+    addClickListenersToArticlesList();
   };
 
   generateTitleLinks();
 
-  const addClickListenersToArticlesList = function() {
-    const links = document.querySelectorAll('.titles a');
 
-    for(let link of links){
-      link.addEventListener('click', titleClickHandler);
-    }
-  };
-
-  addClickListenersToArticlesList();
 
   const calculateTagsParams = function(tags){
     let params = {min:'',max:''};
@@ -176,7 +179,6 @@
     /* execute function "generateTitleLinks" with article selector as argument */
     generateTitleLinks('[data-tags~="' + tag + '"]');
     /* reapply event listeners on article list */
-    addClickListenersToArticlesList();
   };
 
   const addClickListenersToTags = function(){
@@ -264,7 +266,6 @@
     /* execute function "generateTitleLinks" with author selector as argument */
     generateTitleLinks('[data-author="' + author + '"]');
     /* reapply event listeners on article list */
-    addClickListenersToArticlesList();
   };
 
   const addClickListenersToAuthors = function(){
